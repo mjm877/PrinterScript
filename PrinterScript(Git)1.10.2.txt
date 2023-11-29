@@ -1,0 +1,90 @@
+<# 
+Script Name: PrinterScript.ps1
+Create On:  07/10/2023
+Modified On: 07/20/2023
+Version: 1.10.1
+Author: Matthew Mastrullo
+Point of Contact: -------------------
+Description:  Installs all the FINDME printers in the CPS district onto the computer.
+Dependencies: Powershell must be ran as administrator prior to inserting the code on admin side.
+the code can then be ran in powershell on the standard users side to finish the printer installation.
+
+===== Tested Against Environment =====
+PowerShell Version: 5.1.19041.3031
+OS Version: Windows 10
+
+===== Version History =====
+Verison 1.10.2 - Updated Tested Against Enviroment.
+Version 1.10.1 - Updated comments and formatting.
+Version 1.10.0 - Increased efficiency by using a loop to iterate through the printers which are now stored in arrays.
+Version 1.0.0 - Baseline script.
+#>
+
+
+#---------------------------------------
+##### Configuring Static Variables #####
+#--------------------------------------- 
+# Array for School Printers.
+$array1 = "AIKC", "AMIS", "AOWL", "BHIL", "CANS", "CHAS", "CHEV", "CMON", "COLL", "COVE", "DATE", "DATM", "DOUG", "EVAN", "FAIR", "GAMB", "GAMH", "HART", "HAYS", "HUGH", "HYDE", "KILG", "LEAP", "MIDW", "MTWA", "MTAI", "NAVO", "OYLE", "PWOO", "PARK", "PHIL", "PRID", "PRIC", "RIVE", "ROBE", "ROCK", "RHIL", "ROSE", "ROTH", "SAVO", "SAND", "SAYL", "SPEN", "SCPA", "SHRO", "SILV", "TAFE", "TAFH", "TAYL", "VINE", "WALN" , "WHU", "WWOO", "WPLA", "WITU", "WFOR", "WTEC"
+
+# Array for Board Printers.
+$array2 = "IOWA", "LIGH", "CRTH", "RSAW", "BOE"
+
+# Array for Jacobs Center Printers.
+$array3 = "JACO", "A2E"
+
+
+#---------------------------------
+##### SCHOOL PRINTER INSTALL #####
+#---------------------------------
+Write-Host " Starting School Printer Installation "
+
+ForEach ( $schName in $array1 ) {
+    $printer = "$schName-FINDME"
+    Try {
+	Write-Host " " 
+        Write-Host "Attempting to add printer $printer" -ForegroundColor Cyan
+        Add-Printer -ConnectionName "\\$schName-"Filepath"-"Filepath"\$printer"  
+    }
+    Catch {
+        Write-Host "Error adding printer $printer-FINDME"-ForegroundColor Yellow
+    }
+}
+
+
+#--------------------------------
+##### BOARD PRINTER INSTALL #####
+#--------------------------------
+Write-Host " Starting Board Printer Installation "
+
+ForEach ( $boardName in $array2 ) {
+    $printer = "$boardName-FINDME"
+    Try {
+	Write-Host " " 
+        Write-Host "Attempting to add printer $printer" -ForegroundColor Cyan
+        Add-Printer -ConnectionName "\\"Filepath"-"Filepath"-"Filepath"\$printer"  
+    }
+    Catch {
+        Write-Host "Error adding printer $printer-FINDME" -ForegroundColor Yellow
+    }
+} 
+
+
+#---------------------------------
+##### JACOBS PRINTER INSTALL #####
+#---------------------------------
+Write-Host " Starting Jacobs Center Printer Installation "
+
+ForEach ( $jacoName in $array3 ) {
+    $printer = "$jacoName-FINDME"
+    Try {
+	Write-Host " " 
+        Write-Host "Attempting to add printer $printer" -ForegroundColor Cyan
+        Add-Printer -ConnectionName "\\"Filepath"-"Filepath"-"Filepath"\$printer"  
+    }
+    Catch {
+        Write-Host "Error adding printer $printer-FINDME" -ForegroundColor Yellow
+    }
+}
+
+Write-Host " Finished Printer Installation " 
